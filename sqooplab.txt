@@ -1,0 +1,29 @@
+karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com
+
+#list the Table
+sqoop list-tables --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/karthick1808 --username karthick1808 -P
+#import the data to hdfs but the table is without proimary key(-m 1)
+sqoop-import --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/test --username karthick1808 -P --table customer --target-dir /test -m 1
+#impor the table with primary key(no need to mention -m 1)
+sqoop-import --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/test --username karthick1808 -P --table customer1 --target-dir /test1
+#import with select statement
+sqoop-import --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/test --username karthick1808 -P root --table customer1 --where "country = 'US'" --target-dir import-select
+#imprt with query
+sqoop-import --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/test --username karthick1808 -P --table customer1 --query 'SELECT id,name,age FROM test.customer WHERE country='UK'' --split-by cust_id --target-dir import-query
+
+#file format - Parquet
+sqoop-import --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/test --username karthick1808 -P --table customer1 --target-dir /test4 --as-parquetfile
+#file format - AVRO
+sqoop-import --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/test --username karthick1808 -P --table customer1 --target-dir /test5  --as-avrodatafile 
+#file format - Sequence
+sqoop-import --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/test --username karthick1808 -P --table customer1 --target-dir /test6  --as-sequencefile 	
+#file format - Text File
+sqoop-import --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/test --username karthick1808 -P --table customer1 --target-dir /test7  --as-textfile 	
+
+#increamental append
+sqoop-import --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/test --username karthick1808 -P --table customer1 --incremental append --check-column cust_id --last-value 120 --target-dir /test1
+
+#export
+sqoop-export --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/test --username karthick1808 -P --table customer2 --export-dir /test1/part*
+#increamental overwrite
+sqoop-export --connect jdbc:mysql://karthick.c8ucrampvv9z.ap-south-1.rds.amazonaws.com/test --username karthick1808 -P --table customer2 --update-key cust_id --update-mode allowinsert --export-dir /export/out.txt
