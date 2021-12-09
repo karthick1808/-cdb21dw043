@@ -1,0 +1,30 @@
+CREATE TABLE IF NOT EXISTS customer (cust_id int,
+name String,
+age int,
+country String)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ',';
+
+LOAD DATA INPATH '/cdb1234/part*' INTO TABLE tablename;
+
+Static Partitioning
+=====================
+
+CREATE TABLE static_part (cust_id int,
+name String,
+age int)
+partitioned by (country String);
+
+insert into table static_part partition (country="US") select cust_id,name,age from customer where country="US";
+insert into table static_part partition (country="UK") select cust_id,name,age from customer where country="UK";
+
+Dynamic Partitioning
+===============================
+CREATE TABLE dynamic_part (cust_id int,
+name String,
+age int)
+partitioned by (country String);
+
+set hive.exec.dynamic.partition.mode=nonstrict;
+insert into table dynamic_part partition (country) select cust_id,name,age,country from customer where country="US";
+insert into table dynamic_part partition (country) select cust_id,name,age,country from customer where country="UK";
