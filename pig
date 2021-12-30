@@ -16,3 +16,13 @@ The features of Apache pig are:
     Apache Pig extracts the data, performs operations on that data and dumps the data in the required format in HDFS i.e. ETL (Extract Transform Load).
     Apache Pig automatically optimizes the tasks before execution, i.e. automatic optimization.
     It allows programmers and developers to concentrate upon the whole operation irrespective of creating mapper and reducer functions separately.
+
+Where to use Apache Pig?
+
+Apache Pig is used for analyzing and performing tasks involving ad-hoc processing. Apache Pig is used:
+
+    Where we need to process, huge data sets like Web logs, streaming online data, etc.
+    Where we need Data processing for search platforms (different types of data needs to be processed) like Yahoo uses Pig for 40% of their jobs including news feeds and search engine.
+    Where we need to process time sensitive data loads. Here, data needs to be extracted and analyzed quickly. E.g. machine learning algorithms requires time sensitive data loads, like twitter needs to quickly extract data of customer activities (i.e. tweets, re-tweets and likes) and analyze the data to find patterns in customer behaviors, and make recommendations immediately like trending tweets.
+
+Now, in our Apache Pig Tutorial, let us go through the Twitter case study to better understand how Apache Pig helps in analyzing data and makes business understanding easier.
